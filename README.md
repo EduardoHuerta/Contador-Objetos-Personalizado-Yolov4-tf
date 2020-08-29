@@ -1,23 +1,14 @@
-# yolov4-custom-functions
+# yolov4-funciones-personalizadas
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
-A wide range of custom functions for YOLOv4, YOLOv4-tiny, YOLOv3, and YOLOv3-tiny implemented in TensorFlow, TFLite and TensorRT.
+Una amplia gama de funciones personalizadas para YOLOv4, YOLOv4-tiny, YOLOv3 y YOLOv3-tiny implementadas en TensorFlow, TFLite y TensorRT.
 
-DISCLAIMER: This repository is very similar to my repository: [tensorflow-yolov4-tflite](https://github.com/theAIGuysCode/tensorflow-yolov4-tflite). I created this repository to explore coding custom functions to be implemented with YOLOv4, and they may worsen the overal speed of the application and make it not optimized in respect to time complexity. So if you want to run the most optimal YOLOv4 code with TensorFlow than head over to my other repository. This one is to explore cool customizations and applications that can be created using YOLOv4!
+DISCLAIMER: Este repositorio es muy similar a mi repositorio: [https://github.com/theAIGuysCode/tensorflow-yolov4-tflite](https://github.com/EduardoHuerta/Contador-Objetos-Personalizado-Yolov4-tf). Creé este repositorio para explorar las funciones personalizadas de codificación que se implementarán con YOLOv4, y pueden empeorar la velocidad general de la aplicación y hacer que no esté optimizada con respecto a la complejidad del tiempo. Este es para explorar personalizaciones y aplicaciones geniales que pueden ser creadas usando YOLOv4!
 
-### Demo of Object Counter Custom Function in Action!
+### Demo de Funcion contadora de Objetos de clases personalizadas en accion!
 <p align="center"><img src="data/helpers/object_counter.gif"\></p>
 
-## Currently Supported Custom Functions and Flags
-* [x] [Counting Objects (total objects and per class)](#counting)
-* [x] [Print Info About Each Detection (class, confidence, bounding box coordinates)](#info)
-* [ ] [TODO: Crop Detections and Save as New Image]
-* [ ] [TODO: Apply Tesseract OCR to Detections to Extract Text]
-
-If there is a custom function you want to see created then create an issue in the issues tab and suggest it! If enough people suggest the same custom function I will add it quickly!
-
-## Getting Started
-### Conda (Recommended)
+### Conda (Recomendado)
 
 ```bash
 # Tensorflow CPU
@@ -37,139 +28,138 @@ pip install -r requirements.txt
 # TensorFlow GPU
 pip install -r requirements-gpu.txt
 ```
-### Nvidia Driver (For GPU, if you are not using Conda Environment and haven't set up CUDA yet)
-Make sure to use CUDA Toolkit version 10.1 as it is the proper version for the TensorFlow version used in this repository.
+### Nvidia Driver (Para la GPU, si no estás usando el entorno de Conda y no has configurado CUDA todavía)
+Asegúrate de usar la versión 10.1 de CUDA Toolkit, ya que es la versión adecuada para la versión de TensorFlow usada en este repositorio..
 https://developer.nvidia.com/cuda-10.1-download-archive-update2
 
-## Downloading Official Pre-trained Weights
-YOLOv4 comes pre-trained and able to detect 80 classes. For easy demo purposes we will use the pre-trained weights.
-Download pre-trained yolov4.weights file: https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT
+## Descargando los pesos oficiales pre-entrenadas
+YOLOv4 viene pre-entrenado y es capaz de detectar 80 clases. Para facilitar la demostración usaremos los pesos pre-entrenados.
+Descargue el archivo yolov4.weights pre-entrenado: https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT
 
-Copy and paste yolov4.weights from your downloads folder into the 'data' folder of this repository.
+Copia y pega yolov4.weights de tu carpeta de descargas en la carpeta de 'data' de este repositorio.
 
-If you want to use yolov4-tiny.weights, a smaller model that is faster at running detections but less accurate, download file here: https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights
+Si quieres usar yolov4-tiny.weights, un modelo más pequeño que es más rápido en la ejecución de las detecciones pero menos preciso, descarga el archivo aquí: https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/yolov4-tiny.weights
 
-## Using Custom Trained YOLOv4 Weights
-<strong>Learn How To Train Custom YOLOv4 Weights here: https://www.youtube.com/watch?v=mmj3nxGT2YQ </strong>
+## Usando pesos YOLOv4 entrenados a medida
+<strong>Aprende a entrenar pesos personalizados de YOLOv4 aquí: https://www.youtube.com/watch?v=mmj3nxGT2YQ </strong>
 
-<strong>Watch me Walk-Through using Custom Model in TensorFlow :https://www.youtube.com/watch?v=nOIVxi5yurE </strong>
+<strong>Observa como correr usando el modelo personalizado en TensorFlow :https://www.youtube.com/watch?v=nOIVxi5yurE </strong>
 
-USE MY LICENSE PLATE TRAINED CUSTOM WEIGHTS: https://drive.google.com/file/d/1EUPtbtdF0bjRtNjGv436vDY28EN5DXDH/view?usp=sharing
+USAR MI MATRÍCULA ENTRENADO PESOS PERSONALIZADOS: https://drive.google.com/file/d/1-46gRM6iIHtRkRj37fwZIVr9W7PxBDt9/view?usp=sharing
 
-Copy and paste your custom .weights file into the 'data' folder and copy and paste your custom .names into the 'data/classes/' folder.
+Copie y pegue su archivo personalizado .weights en la carpeta 'data' y copie y pegue sus nombres personalizados en la carpeta 'data/classes/'.
 
-The only change within the code you need to make in order for your custom model to work is on line 14 of 'core/config.py' file.
-Update the code to point at your custom .names file as seen below. (my custom .names file is called custom.names but yours might be named differently)
+El único cambio dentro del código que necesitas hacer para que tu modelo personalizado funcione es en la línea 14 del archivo 'core/config.py'.
+Actualice el código para que apunte a su archivo personalizado .names como se ve a continuación. (mi archivo .names personalizado se llama custom.names pero el tuyo puede tener un nombre diferente)
 <p align="center"><img src="data/helpers/custom_config.png" width="640"\></p>
 
-<strong>Note:</strong> If you are using the pre-trained yolov4 then make sure that line 14 remains <strong>coco.names</strong>.
+<strong>Nota:</strong> Si estás usando el yolov4 pre-entrenado, entonces asegúrate de que la línea 14 permanezca <strong>coco.names</strong>.
 
-## YOLOv4 Using Tensorflow (tf, .pb model)
-To implement YOLOv4 using TensorFlow, first we convert the .weights into the corresponding TensorFlow model files and then run the model.
+## YOLOv4 Usando Tensorflow (tf, .pb model)
+Para implementar YOLOv4 usando TensorFlow, primero convertimos los .weights en los correspondientes archivos de modelo de TensorFlow y luego ejecutamos el modelo.
 ```bash
-# Convert darknet weights to tensorflow
+# Convierte los pesos de la oscuridad en flujo tensorial
 ## yolov4
 python save_model.py --weights ./data/yolov4.weights --output ./checkpoints/yolov4-416 --input_size 416 --model yolov4 
 
-# Run yolov4 tensorflow model
+# Ejecutar modelo de tensorflow yolov4 
 python detect.py --weights ./checkpoints/yolov4-416 --size 416 --model yolov4 --images ./data/images/kite.jpg
 
-# Run yolov4 on video
+# Ejecutar yolov4 en video
 python detect_video.py --weights ./checkpoints/yolov4-416 --size 416 --model yolov4 --video ./data/video/video.mp4 --output ./detections/results.avi
 
-# Run yolov4 on webcam
+# Ejecutar yolov4 en webcam
 python detect_video.py --weights ./checkpoints/yolov4-416 --size 416 --model yolov4 --video 0 --output ./detections/results.avi
 ```
-If you want to run yolov3 or yolov3-tiny change ``--model yolov3`` and .weights file in above commands.
+Si quieres ejecutar yolov3 o yolov3-tiny cambia ``--model yolov3`` y el archivo .pesos en los comandos anteriores.
 
-<strong>Note:</strong> You can also run the detector on multiple images at once by changing the --images flag like such ``--images "./data/images/kite.jpg, ./data/images/dog.jpg"``
+<strong>Nota:</strong> También puedes hacer funcionar el detector en múltiples imágenes a la vez cambiando la bandera de --imágenes como tal ``--images "./data/images/kite.jpg, ./data/images/dog.jpg"``
 
-### Result Image(s) (Regular TensorFlow)
-You can find the outputted image(s) showing the detections saved within the 'detections' folder.
-#### Pre-trained YOLOv4 Model Example
+### Resultado de Imagen(es) (Regular TensorFlow)
+Puedes encontrar la(s) imagen(es) de salida que muestra(n) las detecciones guardadas dentro de la carpeta "detecciones".
+#### Ejemplo de modelo Pre-entrenado YOLOv4
 <p align="center"><img src="data/helpers/result.png" width="640"\></p>
 
-### Result Video
-Video saves wherever you point --output flag to. If you don't set the flag then your video will not be saved with detections on it.
+### Resultado de Video
+El video guarda donde quiera que apunte... la bandera de salida(--output). Si no pones la bandera entonces tu video no se guardará con detecciones en él.
 <p align="center"><img src="data/helpers/demo.gif"\></p>
 
-## YOLOv4-Tiny using TensorFlow
-The following commands will allow you to run yolov4-tiny model.
-```
+## YOLOv4-Tiny usando TensorFlow
+TLos siguientes comandos te permitirán ejecutar el modelo yolov4-tiny.``
 # yolov4-tiny
 python save_model.py --weights ./data/yolov4-tiny.weights --output ./checkpoints/yolov4-tiny-416 --input_size 416 --model yolov4 --tiny
 
-# Run yolov4-tiny tensorflow model
+# Ejecutar modelo de tensorflow yolov4-tiny  
 python detect.py --weights ./checkpoints/yolov4-tiny-416 --size 416 --model yolov4 --images ./data/images/kite.jpg --tiny
 ```
 
-## Custom YOLOv4 Using TensorFlow
-The following commands will allow you to run your custom yolov4 model. (video and webcam commands work as well)
+## YOLOv4 Personalizado Utilizando TensorFlow
+Los siguientes comandos te permitirán ejecutar tu modelo personalizado yolov4. (los comandos de video y cámara web también funcionan)
 ```
-# custom yolov4
+# yolov4 personalizado
 python save_model.py --weights ./data/custom.weights --output ./checkpoints/custom-416 --input_size 416 --model yolov4 
 
-# Run custom yolov4 tensorflow model
+# Ejecuta yolov4 personalizado con el modelo tensorflow
 python detect.py --weights ./checkpoints/custom-416 --size 416 --model yolov4 --images ./data/images/car.jpg
 ```
 
-#### Custom YOLOv4 Model Example (see video link above to train this model)
+#### Ejemplo de modelo personalizado YOLOv4 (ver el enlace de vídeo de arriba para entrenar a este modelo)
 <p align="center"><img src="data/helpers/custom_result.png" width="640"\></p>
 
-## Custom Functions and Flags
-Here is how to use all the currently supported custom functions and flags that I have created.
+## Funciones personalizadas y banderas
+Aquí está cómo usar todas las funciones y banderas personalizadas actualmente soportadas que he creado.
 
 <a name="counting"/>
 
-### Counting Objects (total objects or per class)
-I have created a custom function within the file [core/functions.py](https://github.com/theAIGuysCode/yolov4-custom-functions/blob/master/core/functions.py) that can be used to count and keep track of the number of objects detected at a given moment within each image or video. It can be used to count total objects found or can count number of objects detected per class.
+### Contador de Objetos (numero total de objetos por class)
+He creado una función personalizada dentro del archivo [core/functions.py](https://github.com/EduardoHuerta/Contador-Objetos-Personalizado-Yolov4-tf/core/functions.py) que puede ser usado para contar y llevar un registro del número de objetos detectados en un momento dado dentro de cada imagen o video. Puede ser usado para contar el total de objetos encontrados o puede contar el número de objetos detectados por clase.
 
-#### Count Total Objects
-To count total objects all that is needed is to add the custom flag "--count" to your detect.py or detect_video.py command.
+#### Contador de objetos Totales
+Para contar los objetos totales todo lo que se necesita es añadir la bandera personalizada "--count" a su comando detect.py o detect_video.py.
 ```
-# Run yolov4 model while counting total objects detected
+# Ejecutar modelo yolov4 mientras el contador detecta objetos totales.
 python detect.py --weights ./checkpoints/yolov4-416 --size 416 --model yolov4 --images ./data/images/dog.jpg --count
 ```
-Running the above command will count the total number of objects detected and output it to your command prompt or shell as well as on the saved detection as so:
+Al ejecutar el comando anterior se contará el número total de objetos detectados y se enviará a la línea de comandos o al shell, así como a la detección guardada como tal:
 <p align="center"><img src="data/helpers/total_count.png" width="640"\></p>
 
-#### Count Objects Per Class
-To count the number of objects for each individual class of your object detector you need to add the custom flag "--count" as well as change one line in the detect.py or detect_video.py script. By default the count_objects function has a parameter called <strong>by_class</strong> that is set to False. If you change this parameter to <strong>True</strong> it will count per class instead.
+#### Contar los objetos por clase
+Para contar el número de objetos de cada clase individual de su detector de objetos, debe añadir la bandera personalizada "--count", así como cambiar una línea en el script detect.py o detect_video.py. De forma predeterminada, la función count_objects tiene un parámetro llamado <strong>by_class</strong> que está establecido en False. Si cambia este parámetro a <strong>True</strong> contará por clase en su lugar.
 
-To count per class make detect.py or detect_video.py look like this:
+Para contar por clase haz que detect.py o detect_video.py se vea así:
 <p align="center"><img src="data/helpers/by_class_config.PNG" width="640"\></p>
 
-Then run the same command as above:
+Entonces ejecuta el mismo comando de arriba:
 ```
-# Run yolov4 model while counting objects per class
+# Ejecute el modelo yolov4 mientras cuenta los objetos por clase
 python detect.py --weights ./checkpoints/yolov4-416 --size 416 --model yolov4 --images ./data/images/dog.jpg --count
 ```
-Running the above command will count the number of objects detected per class and output it to your command prompt or shell as well as on the saved detection as so:
+Al ejecutar el comando anterior se contará el número de objetos detectados por clase y se enviará a la línea de comandos o al shell, así como a la detección guardada como tal:
 <p align="center"><img src="data/helpers/perclass_count.png" width="640"\></p>
 
 <strong>Note:</strong> You can add the --count flag to detect_video.py commands as well!
 
 <a name="info"/>
 
-### Print Detailed Info About Each Detection (class, confidence, bounding box coordinates)
-I have created a custom flag called <strong>INFO</strong> that can be added to any detect.py or detect_video.py commands in order to print detailed information about each detection made by the object detector. To print the detailed information to your command prompt just add the flag "--info" to any of your commands. The information on each detection includes the class, confidence in the detection and the bounding box coordinates of the detection in xmin, ymin, xmax, ymax format.
+### Imprimir información detallada sobre cada detección (clase, confianza, coordenadas del cuadro delimitador)
+He creado una bandera personalizada llamada <strong>INFO</strong> que puede ser añadida a cualquier comando detect.py o detect_video.py para imprimir información detallada sobre cada detección hecha por el detector de objetos. Para imprimir la información detallada en su línea de comandos sólo tiene que añadir la bandera "--info" a cualquiera de sus comandos. La información de cada detección incluye la clase, la confianza en la detección y las coordenadas del cuadro delimitador de la detección en formato xmin, ymin, xmax, ymax.
 
-If you want to edit what information gets printed you can edit the <strong>draw_bbox</strong> function found within the [core/utils.py](https://github.com/theAIGuysCode/yolov4-custom-functions/blob/master/core/utils.py) file. The line that prints the information looks as follows:
+Si quieres editar la información que se imprime, puedes editar la función <strong>draw_bbox</strong> que se encuentra dentro del archivo [core/utils.py](https://github.com/EduardoHuerta/Contador-Objetos-Personalizado-Yolov4-tf/core/utils.py). La línea que imprime la información tiene el siguiente formato:
 <p align="center"><img src="data/helpers/info_details.PNG" height="50"\></p>
 
-Example of info field added to command:
+Ejemplo de campo de información agregado al comando:
 ```
 python detect.py --weights ./checkpoints/yolov4-416 --size 416 --model yolov4 --images ./data/images/dog.jpg --info
 ```
-Resulting output within your shell or terminal:
+El resultado de la salida dentro de su Powershell o terminal:
 <p align="center"><img src="data/helpers/info_output.PNG" height="100"\></p>
 
-<strong>Note:</strong> You can add the --info flag to detect_video.py commands as well!
+<strong>Nota:</strong> You can add the --info flag to detect_video.py commands as well!
 
-## YOLOv4 Using TensorFlow Lite (.tflite model)
-Can also implement YOLOv4 using TensorFlow Lite. TensorFlow Lite is a much smaller model and perfect for mobile or edge devices (raspberry pi, etc).
+## YOLOv4 Usando TensorFlow Lite (.tflite model)
+También puede implementar YOLOv4 usando TensorFlow Lite. TensorFlow Lite es un modelo mucho más pequeño y perfecto para dispositivos móviles o de borde (raspberry pi, etc).
 ```bash
-# Save tf model for tflite converting
+# Guardar el modelo tf para convertir a tflite
 python save_model.py --weights ./data/yolov4.weights --output ./checkpoints/yolov4-416 --input_size 416 --model yolov4 --framework tflite
 
 # yolov4
@@ -181,33 +171,16 @@ python convert_tflite.py --weights ./checkpoints/yolov4-416 --output ./checkpoin
 # yolov4 quantize int8
 python convert_tflite.py --weights ./checkpoints/yolov4-416 --output ./checkpoints/yolov4-416-int8.tflite --quantize_mode int8 --dataset ./coco_dataset/coco/val207.txt
 
-# Run tflite model
+# Ejecutar tflite model
 python detect.py --weights ./checkpoints/yolov4-416.tflite --size 416 --model yolov4 --images ./data/images/kite.jpg --framework tflite
 ```
-### Result Image (TensorFlow Lite)
+### Resultado de Imagen (TensorFlow Lite)
 You can find the outputted image(s) showing the detections saved within the 'detections' folder.
-#### TensorFlow Lite int8 Example
+#### Ejemplo de TensorFlow Lite int8 
 <p align="center"><img src="data/helpers/result-int8.png" width="640"\></p>
 
 Yolov4 and Yolov4-tiny int8 quantization have some issues. I will try to fix that. You can try Yolov3 and Yolov3-tiny int8 quantization 
 
-## YOLOv4 Using TensorRT
-Can also implement YOLOv4 using TensorFlow's TensorRT. TensorRT is a high-performance inference optimizer and runtime that can be used to perform inference in lower precision (FP16 and INT8) on GPUs. TensorRT can allow up to 8x higher performance than regular TensorFlow.
-```bash# yolov3
-python save_model.py --weights ./data/yolov3.weights --output ./checkpoints/yolov3.tf --input_size 416 --model yolov3
-python convert_trt.py --weights ./checkpoints/yolov3.tf --quantize_mode float16 --output ./checkpoints/yolov3-trt-fp16-416
-
-# yolov3-tiny
-python save_model.py --weights ./data/yolov3-tiny.weights --output ./checkpoints/yolov3-tiny.tf --input_size 416 --tiny
-python convert_trt.py --weights ./checkpoints/yolov3-tiny.tf --quantize_mode float16 --output ./checkpoints/yolov3-tiny-trt-fp16-416
-
-# yolov4
-python save_model.py --weights ./data/yolov4.weights --output ./checkpoints/yolov4.tf --input_size 416 --model yolov4
-python convert_trt.py --weights ./checkpoints/yolov4.tf --quantize_mode float16 --output ./checkpoints/yolov4-trt-fp16-416
-python detect.py --weights ./checkpoints/yolov4-trt-fp16-416 --model yolov4 --images ./data/images/kite.jpg --framework trt
-```
-
-## Command Line Args Reference
 
 ```bash
 save_model.py:
@@ -283,3 +256,4 @@ detect_video.py:
 
    Huge shoutout goes to hunglc007 for creating the backbone of this repository:
   * [tensorflow-yolov4-tflite](https://github.com/hunglc007/tensorflow-yolov4-tflite)
+  * [yolov4-custom-functions](https://github.com/theAIGuysCode/yolov4-custom-functions)
